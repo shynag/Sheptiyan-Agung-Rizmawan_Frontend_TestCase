@@ -8,29 +8,32 @@ import { SalesMetric } from '@/types/sales';
 const salesData: SalesMetric[] = salesDataRaw;
 
 export default function DashboardPage() {
-  return (
-    <div className="min-h-screen bg-slate-50">
-      <Header />
+    return (
+        <div className="min-h-screen bg-slate-50/70">
+            <Header />
 
-      <main className="max-w-7xl mx-auto p-4 md:p-6 space-y-6">
-        <div>
-          <h2 className="text-xl font-bold text-slate-900">
-            Performa Salesman Harian
-          </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Monitoring efektivitas kunjungan dan pencapaian target sales di lapangan.
-          </p>
+            <main className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8 space-y-6">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <div className="flex items-center gap-2">
+                            <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">
+                                Performa Salesman Harian
+                            </h1>
+                        </div>
+                        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                            Monitoring rute kunjungan, nilai order, dan stok kosong (OOS) tim sales lapangan.
+                        </p>
+                    </div>
+
+
+                </div>
+
+                <SummaryCards data={salesData} />
+
+                <PerformanceChart data={salesData} />
+
+                <SalesTable data={salesData} />
+            </main>
         </div>
-
-        {/* 1. Baris Summary Cards */}
-        <SummaryCards data={salesData} />
-
-        {/* 2. Visualisasi Grafik Performa */}
-        <PerformanceChart data={salesData} />
-
-        {/* 3. Filter Bar & Tabel Performa Sales */}
-        <SalesTable data={salesData} />
-      </main>
-    </div>
-  );
+    );
 }

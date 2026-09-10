@@ -22,7 +22,6 @@ export default function DashboardLayout({
     }
   }, [router]);
 
-  // Tampilkan loading screen bersih saat memverifikasi sesi di localStorage
   if (!isAuthenticated) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-50">
