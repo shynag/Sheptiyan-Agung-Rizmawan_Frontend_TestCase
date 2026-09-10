@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AuthUser } from '@/types/sales';
-import { ShieldCheck, BarChart3, Navigation, LockKeyhole, ArrowRight, Loader2 } from 'lucide-react';
+import { ShieldCheck, BarChart3, Navigation, ArrowRight, Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -14,6 +14,17 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+
+  // Guest Guard: Cek sesi supervisor sebelum menampilkan halaman login
+  useEffect(() => {
+    const rawUser = localStorage.getItem('auth_user');
+    if (rawUser) {
+      router.replace('/dashboard');
+    } else {
+      setIsCheckingAuth(false);
+    }
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,6 +72,18 @@ export default function LoginPage() {
     }
   };
 
+  // Cegah flicker tampilan form saat mengecek status login
+  if (isCheckingAuth) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
+        <div className="flex flex-col items-center gap-2">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+          <p className="text-xs font-medium text-slate-500">Memeriksa Sesi...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <main className="grid min-h-screen w-full grid-cols-1 bg-white lg:grid-cols-2">
       {/* Sisi Kiri: Branding & Value Props */}
@@ -73,7 +96,7 @@ export default function LoginPage() {
             <span className="text-lg font-bold tracking-tight text-white block leading-none">
               Distrilink
             </span>
-            <span className="text-[11px] text-slate-400">Sales Automation Platform </span>
+            <span className="text-[11px] text-slate-400">Sales Automation Platform</span>
           </div>
         </div>
 
@@ -132,7 +155,7 @@ export default function LoginPage() {
               <span className="block text-lg font-bold tracking-tight text-slate-900 leading-none">
                 Distrilink
               </span>
-              <span className="text-[11px] text-slate-400">Sales Automation Platform </span>
+              <span className="text-[11px] text-slate-400">Sales Automation Platform</span>
             </div>
           </div>
 
