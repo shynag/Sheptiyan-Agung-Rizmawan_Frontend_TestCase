@@ -36,25 +36,12 @@ Aplikasi terintegrasi dengan endpoint autentikasi DummyJSON (`https://dummyjson.
 
 ---
 
-## 🛠️ Alasan Pemilihan Pendekatan Teknis
+## 🛠️ Keputusan & Pendekatan Teknis
 
-Beberapa pertimbangan arsitektur yang diterapkan dalam pengerjaan proyek ini:
-
-1. **Hybrid Rendering Strategy (Server & Client Separation)**
-   - **Keputusan:** Halaman root dashboard memanfaatkan Server Component untuk parsing dataset awal, sementara interaktivitas (pencarian, rendering SVG Recharts, dan auth guard) diisolasi ke dalam Client Component (`'use client'`).
-   - **Alasan:** Meminimalkan ukuran bundle JavaScript di sisi browser sembari menjaga komponen interaktif tetap modular dan reaktif.
-
-2. **Client-Side Auth Guard vs Server Middleware**
-   - **Keputusan:** Menggunakan `DashboardLayout` dan `LoginPage` berbasis `useEffect` + `localStorage` guard, bukan Next.js Edge Middleware.
-   - **Alasan:** API autentikasi publik (DummyJSON) mengembalikan token yang hanya bisa disimpan di `localStorage` pada *client context* (bukan *HttpOnly session cookie*). Karena Server Middleware Next.js tidak memiliki akses ke `localStorage`, validasi sesi di sisi client dengan penanganan status loading (*flicker prevention*) adalah solusi paling pragmatis dan reliabel tanpa over-engineering backend proxy.
-
-3. **Shadcn UI & Tailwind CSS untuk Kebutuhan Enterprise**
-   - **Keputusan:** Memakai kombinasi Shadcn UI (Radix primitives) dan Tailwind CSS dengan tema Light Mode konsisten.
-   - **Alasan:** Dashboard operasional sales menuntut keterbacaan data yang padat (*high data density*). Radix UI menjamin aksesibilitas keyboard dan struktur DOM yang bersih, sementara Tailwind mempermudah kontrol kontras visual (badge pastel untuk status, border tipis, dan hirarki tipografi) tanpa runtime overhead CSS-in-JS.
-
-4. **Visualisasi Data dengan Recharts**
-   - **Keputusan:** Menggunakan Recharts untuk chart perbandingan efektivitas sales.
-   - **Alasan:** Sifatnya yang deklaratif mempermudah integrasi dengan state React. Penggunaan `<ResponsiveContainer>` dan konfigurasi `maxBarSize` memastikan grafik tetap proporsional di berbagai resolusi layar (laptop, monitor ultra-wide, hingga tablet).
+- **Pemisahan Server & Client Component (App Router):** Halaman root dashboard memakai Server Component untuk membaca dataset awal, sedangkan interaktivitas (filter, search, Recharts, dan auth guard) diisolasi ke Client Component (`'use client'`) agar ukuran bundle JavaScript di browser tetap ramping.
+- **Client-Side Auth Guard di Layout:** DummyJSON API mengembalikan token berbasis client (`localStorage`), bukan *HttpOnly session cookie*. Karena Next.js Edge Middleware tidak punya akses ke `localStorage`, proteksi rute diimplementasikan pada `DashboardLayout` dan `LoginPage` dengan *loading fallback* untuk mencegah kebocoran tampilan (*flicker*).
+- **Shadcn UI & Tailwind CSS:** Dipilih untuk menangani tampilan dashboard dengan kepadatan data tinggi (*high data density*). Primitif Radix UI memastikan aksesibilitas keyboard dan struktur DOM yang bersih, sementara Tailwind memudahkan kontrol kontras visual (status badge pastel, border lembut) tanpa overhead runtime.
+- **Visualisasi dengan Recharts:** Memanfaatkan `<ResponsiveContainer>` dan pembatasan lebar batang (`maxBarSize`) agar visualisasi perbandingan efektivitas sales tetap proporsional dan tidak *overflow* di berbagai ukuran layar (mobile, tablet, desktop).
 
 ---
 
