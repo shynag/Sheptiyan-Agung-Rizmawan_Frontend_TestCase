@@ -1,4 +1,3 @@
-```markdown
 # Distrilink SAP — Sales Distribution Monitoring Dashboard
 
 Aplikasi web dashboard monitoring operasional sales lapangan (*canvasser*) berbasis Next.js App Router, Tailwind CSS, dan Shadcn UI. Platform ini dirancang untuk membantu supervisor menganalisis efektivitas rute kunjungan outlet harian, akumulasi nilai order (*taking order*), serta deteksi risiko stok kosong (*Out of Stock* / OOS) secara terpusat.
