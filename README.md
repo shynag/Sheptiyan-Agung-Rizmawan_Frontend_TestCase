@@ -38,7 +38,7 @@ Aplikasi terintegrasi dengan endpoint autentikasi DummyJSON (`https://dummyjson.
 
 ## 🛠️ Keputusan & Pendekatan Teknis
 
-- **Pemisahan Server & Client Component (App Router):** Halaman root dashboard memakai Server Component untuk membaca dataset awal, sedangkan interaktivitas (filter, search, Recharts, dan auth guard) diisolasi ke Client Component (`'use client'`) agar ukuran bundle JavaScript di browser tetap ramping.
+- **Pemisahan Server & Client Component (App Router):** Halaman root dashboard memakai Server Component untuk membaca dataset awal, sedangkan interaktivitas (filter/search, Recharts, dan auth guard) diisolasi ke Client Component (`'use client'`) agar ukuran bundle JavaScript di browser tetap ramping.
 - **Client-Side Auth Guard di Layout:** DummyJSON API mengembalikan token berbasis client (`localStorage`), bukan *HttpOnly session cookie*. Karena Next.js Edge Middleware tidak punya akses ke `localStorage`, proteksi rute diimplementasikan pada `DashboardLayout` dan `LoginPage` dengan *loading fallback* untuk mencegah kebocoran tampilan (*flicker*).
 - **Shadcn UI & Tailwind CSS:** Dipilih untuk menangani tampilan dashboard dengan kepadatan data tinggi (*high data density*). Primitif Radix UI memastikan aksesibilitas keyboard dan struktur DOM yang bersih, sementara Tailwind memudahkan kontrol kontras visual (status badge pastel, border lembut) tanpa overhead runtime.
 - **Visualisasi dengan Recharts:** Memanfaatkan `<ResponsiveContainer>` dan pembatasan lebar batang (`maxBarSize`) agar visualisasi perbandingan efektivitas sales tetap proporsional dan tidak *overflow* di berbagai ukuran layar (mobile, tablet, desktop).
