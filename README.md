@@ -43,7 +43,7 @@ Pastikan perangkat kamu sudah terpasang:
 Buka terminal dan unduh repositori proyek:
 ```bash
 git clone https://github.com/shynag/Sheptiyan-Agung-Rizmawan_Frontend_TestCase.git
-cd distrilink-sap-dashboard
+cd Sheptiyan-Agung-Rizmawan_Frontend_TestCase
 
 ```
 
@@ -106,40 +106,3 @@ npm run build
 npm run start
 
 ```
-
----
-
-## ✨ Fitur Utama
-
-1. **Autentikasi & Route Guarding**
-* Halaman login split-screen enterprise modern yang responsif di seluruh breakpoint perangkat.
-* Sesi supervisor tersimpan di `localStorage` (`auth_user`).
-* Root redirect otomatis (`/`) menuju `/dashboard` (jika terautentikasi) atau `/login` (jika belum login).
-* Layout-level route guard di `/dashboard` untuk mengeliminasi *flickering* tampilan sebelum verifikasi selesai.
-
-
-2. **Ringkasan Metrik Operasional (Summary Cards)**
-* Perhitungan otomatis total realisasi kunjungan harian.
-* Rata-rata persentase efektivitas rute tim sales.
-* Akumulasi nominal pesanan (*gross order value*) dalam format Rupiah terstandarisasi.
-
-
-3. **Visualisasi Data Performa (Bar Chart)**
-* Grafik batang interaktif menggunakan Recharts untuk membandingkan efektivitas kunjungan antar salesman.
-* Pewarnaan bar kontekstual (Biru untuk performa optimal $\ge 80\%$, Amber untuk yang memerlukan evaluasi $< 70\%$).
-* Custom hover tooltip menyajikan rincian target vs realisasi visit serta wilayah penugasan.
-
-
-4. **Tabel Data Interaktif & Filter Multi-Kriteria**
-* Real-time search query berdasarkan nama salesman.
-* Filter dropdown dinamis berdasarkan wilayah/area kerja.
-* Indikator visual progres rasio kunjungan (*progress bar* mini) dan *pill badge* peringatan untuk item pesanan berstatus OOS.
-
-
----
-
-## 📌 Asumsi & Batasan Sistem
-
-1. **Format Mock Data:** Dataset performa sales diasumsikan merupakan agregasi harian per individu salesman yang mencakup metrik rute, realisasi, total pesanan, dan kuantitas OOS.
-2. **Penyimpanan Sesi:** Sesi login disimpan pada `localStorage` browser demi kompatibilitas penuh dengan arsitektur SPA dan endpoint pengujian publik DummyJSON.
-3. **Konektivitas:** Diperlukan akses internet aktif saat melakukan proses login untuk verifikasi kredensial ke API DummyJSON.
